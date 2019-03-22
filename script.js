@@ -12,12 +12,25 @@ function rootReducer(state=initialState, action) {
         ...newState,
         todos: [...newState.todos, { task: action.task, id: newState.id }]
       };
+    case "REMOVE_TODO":
+      let todos = state.todos.filter(val => val.id !== +action.id);
+      return {...state, todos}
+    default:
+    return state
     }
 }
 
 const store = Redux.createStore(rootReducer);
 
 $(document).ready(function() {
+  $("ul").on("click", "button", function(event) { //using event delegation
+    store.dispatch({
+      type: "REMOVE_TODO",
+      id: $(event.target).attr("id")
+    })
+    $(event.target).parent().remove();
+  });
+
   $("form").on("submit", function(event) {
     event.preventDefault();
     let newTask = $("#task").val();
