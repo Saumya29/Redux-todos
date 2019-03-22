@@ -29,6 +29,11 @@ $(document).ready(function() {
     let $newLi = $("<li>",{
       text: newTask
     });
+    let $newButton = $("<button>", {
+      text: "X",
+      id: currentState.id
+    });
+    $($newLi).append($newButton);
     $("#todos").append($newLi);
     $("form").trigger("reset");
   });
